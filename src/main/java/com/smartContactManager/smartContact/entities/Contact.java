@@ -25,6 +25,12 @@ public class Contact {
 	private String phone;
 	@ManyToOne
 	private User user;
+	public User getUser() {
+		return user;
+	}
+	public void setUser(User user) {
+		this.user = user;
+	}
 	public Contact() {
 		super();
 		// TODO Auto-generated constructor stub

@@ -61,6 +61,13 @@
 
 <div class="content ">
 	<i onclick="togglesidebar()" class="fa-solid fa-bars"></i>
+	
+	<!--message-->
+	
+	<div th:if="${session.message}" th:classappend="${session.message.type}" class="alert" role="alert" >
+						<p class="text-center" th:text="${session.message.content}"></p>
+					</div>
+	
   <div th:replace="${content}"></div>
  </div>   
  
