@@ -7,6 +7,9 @@ import jakarta.persistence.GenerationType;
 import jakarta.persistence.Id;
 import jakarta.persistence.ManyToOne;
 import jakarta.persistence.Table;
+import jakarta.validation.constraints.Email;
+import jakarta.validation.constraints.NotBlank;
+import jakarta.validation.constraints.Size;
 
 @Entity
 @Table(name="CONTACT")
@@ -15,13 +18,21 @@ public class Contact {
 	@Id
 	@GeneratedValue(strategy = GenerationType.AUTO)
 	private int c_id;
+	@NotBlank(message="Name field cannot be empty")
+	@Size(min=3, max=15, message = "Name must be between 3-15 characters !!")
 	private String name;
+	
+	@Size(min=3, max=15, message = "Name must be between 3-15 characters !!")
 	private String secondname;
+	@Column(unique = true)
+	@Email(regexp = "^[\\w-\\.]+@([\\w-]+\\.)+[\\w-]{2,4}$")
 	private String email;
 	@Column(length=1000)
 	private String description;
 	private String work;
 	private String imageurl;
+	@NotBlank(message="Phone field cannot be empty")
+	@Size(min=10, max=10, message = "Number must be 10 digits !!")
 	private String phone;
 	@ManyToOne
 	private User user;

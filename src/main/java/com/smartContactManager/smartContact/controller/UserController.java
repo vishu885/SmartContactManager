@@ -7,10 +7,13 @@ import java.nio.file.Paths;
 import java.nio.file.StandardCopyOption;
 import java.security.Principal;
 
+import javax.validation.Valid;
+
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.core.io.ClassPathResource;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
+import org.springframework.validation.BindingResult;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.ModelAttribute;
 import org.springframework.web.bind.annotation.PostMapping;
@@ -61,12 +64,21 @@ public class UserController {
 		return "normal/add-contactForm";
 	}
 	@PostMapping("/do_addContact")
-	public String doAddContact(@ModelAttribute Contact contact,@RequestParam("image") 
-	MultipartFile file, Principal p, HttpSession session)
+	public String doAddContact(@Valid @ModelAttribute Contact contact,BindingResult result,
+			@RequestParam("image") MultipartFile file, Principal p, HttpSession session
+			,Model m)
 	{
 	try {
 		String name=p.getName();
 		User user=this.userRepository.getUserByUserName(name);
+		
+		if(result.hasErrors()) 
+		{
+			System.out.println("Error"+result.toString());
+			m.addAttribute("contact",contact);
+			return "normal/add-contactForm";
+		}
+		
 		//Processing file
 		if(file.isEmpty())
 		{

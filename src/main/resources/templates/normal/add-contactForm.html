@@ -15,7 +15,8 @@
 					<div class="container-fluid mt-1">
 						<div class="row">
 						<div class="col-md-10 offset-md-1">
-							<form action="#" th:action="@{/user/do_addContact}" th:object="${contact}" 
+							<form action="#" th:action="@{/user/do_addContact}" 
+							th:object="${contact}" novalidate
 							enctype="multipart/form-data" method="post" class="mt-2" >
 							
 							<div class="input-group ">
@@ -25,9 +26,11 @@
 									</div> 	
 									
 								</div>
-								<input type="text" id="firstname" name="name"
-								placeholder="Enter Name here" class="form-control"/>
+								<input type="text" id="firstname" name="name" required
+								placeholder="Enter Name here" class="form-control"
+								th:classappend="${#fields.hasErrors('name')?'is-invalid':''}"/>
 							</div>
+							<p  th:each="e : ${#fields.errors('name')}" th:text="${e}" class="invalid"></p>
 							
 							<div class="input-group mt-3">
 								<div class="input-group-prepend">
@@ -36,7 +39,7 @@
 									</div> 	
 									
 								</div>
-								<input type="text" id="secondname" name="secondname"
+								<input type="text" id="secondname" name="secondname" 
 								placeholder="Enter NickName here" class="form-control"/>
 							</div>
 							
@@ -47,9 +50,12 @@
 									</div> 	
 									
 								</div>
-								<input type="number" id="phone" name="phone"
-								placeholder="Enter Number here" class="form-control"/>
+								<input type="number" id="phone" name="phone" required
+								placeholder="Enter Number here" class="form-control"
+								th:classappend="${#fields.hasErrors('phone')?'is-invalid':''}" />
+								
 							</div>
+							<p th:each="e:${#fields.errors('phone')}" th:text="${e}" class="invalid"></p>
 							
 							<div class="input-group mt-3">
 								<div class="input-group-prepend">
@@ -58,9 +64,11 @@
 									</div> 	
 									
 								</div>
-								<input type="email" id="email" name="email"
-								placeholder="Enter E-mail here" class="form-control"/>
+								<input type="email" id="email" name="email" required
+								placeholder="Enter E-mail here" class="form-control"
+								th:classappend="${#fields.hasErrors('email')?'is-invalid':''}" />
 							</div>
+							<p th:each="e : ${#fields.errors('email')}" th:text="${e}" class="invalid"></p>
 							
 							<div class="input-group mt-3">
 								<div class="input-group-prepend">
